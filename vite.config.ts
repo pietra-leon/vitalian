@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
+  base: '/vitalian/', // Nome do repositório no GitHub Pages
   plugins: [
     react(),
     tailwindcss(),
