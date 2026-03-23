@@ -29,17 +29,28 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm' : 'bg-white'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm' : 'bg-white'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Logo Group */}
           <div className="flex-shrink-0">
-            <h1 className="font-serif text-2xl tracking-tight text-gray-900">
-              Vitalian
-            </h1>
+            <a href="/" className="flex items-center gap-3">
+              {/* Logo estrela */}
+              <img
+                src="/LOGO.png"
+                alt="Vitalian Logo"
+                className="h-10 w-auto object-contain"
+              />
+
+              {/* Nome Logo */}
+              <img
+                src="/LOGO_NOME.png"
+                alt="Complemento"
+                className="h-8 w-auto object-contain" // H-8 para ser sutilmente menor, ou H-10 para igualar
+              />
+            </a>
           </div>
 
           {/* Navigation */}
