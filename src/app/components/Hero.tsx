@@ -17,22 +17,28 @@ export function Hero() {
               </p>
             </div>
 
-            <Button
-              size="lg"
-              className="bg-[#5a6d4f] hover:bg-[#4a5d3f] text-white px-8 py-6 text-lg"
+            {/* Link do WhatsApp no Hero */}
+            <a
+              href="https://wa.me/5564981157082?text=Olá!%20Vi%20o%20site%20da%20Vitalian%20e%20tenho%20interesse%20em%20otimizar%20meu%20atendimento.%20Como%20funciona?"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
             >
-              Otimizar meu atendimento
-            </Button>
+              <Button
+                size="lg"
+                className="bg-[#5a6d4f] hover:bg-[#4a5d3f] text-white px-8 py-6 text-lg"
+              >
+                Otimizar meu atendimento
+              </Button>
+            </a>
 
             {/* Trust Indicators */}
             <div className="flex items-center gap-8 pt-4">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">Conformidade LGPD</span>
+                <span className="text-sm text-gray-600"> </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">Criptografia AES-256</span>
+                <span className="text-sm text-gray-600"> </span>
               </div>
             </div>
           </div>

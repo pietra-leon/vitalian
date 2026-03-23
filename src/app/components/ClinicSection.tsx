@@ -33,7 +33,7 @@ export function ClinicSection() {
   const packages = [
     {
       name: 'Essencial',
-      price: 'R$ 297',
+      price: 'R$ ---',
       period: '/mês',
       features: [
         'Até 50 pacientes/mês',
@@ -46,30 +46,28 @@ export function ClinicSection() {
     },
     {
       name: 'Profissional',
-      price: 'R$ 597',
+      price: 'R$ ---',
       period: '/mês',
       features: [
         'Até 150 pacientes/mês',
         'Questionários personalizáveis',
         'IA de triagem incluída',
         'Exportação para prontuário',
-        'Suporte prioritário',
-        'Whitelabel disponível'
+        'Suporte prioritário'
       ],
       cta: 'Mais Popular',
       highlighted: true
     },
     {
       name: 'Enterprise',
-      price: 'Sob consulta',
+      price: 'R$ ---',
       period: '',
       features: [
         'Pacientes ilimitados',
         'API completa',
         'Múltiplos médicos',
         'Customização total',
-        'Gerente de conta dedicado',
-        'SLA garantido'
+        'Gerente de conta dedicado'
       ],
       cta: 'Falar com Consultor',
       highlighted: false
@@ -128,11 +126,10 @@ export function ClinicSection() {
           {packages.map((pkg, index) => (
             <div
               key={index}
-              className={`rounded-2xl p-8 ${
-                pkg.highlighted
-                  ? 'bg-[#5a6d4f] text-white shadow-2xl scale-105'
-                  : 'bg-white border-2 border-gray-200'
-              }`}
+              className={`rounded-2xl p-8 ${pkg.highlighted
+                ? 'bg-[#5a6d4f] text-white shadow-2xl scale-105'
+                : 'bg-white border-2 border-gray-200'
+                }`}
             >
               {pkg.highlighted && (
                 <div className="text-center mb-4">
@@ -141,7 +138,7 @@ export function ClinicSection() {
                   </span>
                 </div>
               )}
-              
+
               <div className="text-center mb-8">
                 <h3 className={`text-2xl mb-4 ${pkg.highlighted ? 'text-white' : 'text-gray-900'}`}>
                   {pkg.name}
@@ -161,9 +158,8 @@ export function ClinicSection() {
               <ul className="space-y-4 mb-8">
                 {pkg.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <Check className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
-                      pkg.highlighted ? 'text-white' : 'text-[#5a6d4f]'
-                    }`} />
+                    <Check className={`w-5 h-5 flex-shrink-0 mt-0.5 ${pkg.highlighted ? 'text-white' : 'text-[#5a6d4f]'
+                      }`} />
                     <span className={pkg.highlighted ? 'text-white/90' : 'text-gray-600'}>
                       {feature}
                     </span>
@@ -172,11 +168,10 @@ export function ClinicSection() {
               </ul>
 
               <Button
-                className={`w-full ${
-                  pkg.highlighted
-                    ? 'bg-white text-[#5a6d4f] hover:bg-gray-100'
-                    : 'bg-[#5a6d4f] text-white hover:bg-[#4a5d3f]'
-                }`}
+                className={`w-full ${pkg.highlighted
+                  ? 'bg-white text-[#5a6d4f] hover:bg-gray-100'
+                  : 'bg-[#5a6d4f] text-white hover:bg-[#4a5d3f]'
+                  }`}
                 size="lg"
               >
                 {pkg.cta}
@@ -193,13 +188,21 @@ export function ClinicSection() {
           <p className="text-gray-600 mb-6">
             Entre na lista de espera e receba uma demonstração personalizada.
           </p>
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-[#5a6d4f] text-[#5a6d4f] hover:bg-[#5a6d4f]/10"
+
+          {/* Link envolvendo o botão */}
+          <a
+            href="https://wa.me/5564981157082?text=Olá!%20Gostaria%20de%20entrar%20na%20lista%20de%20espera%20da%20Vitalian%20e%20receber%20uma%20demonstração."
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Entrar na Lista de Espera
-          </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-[#5a6d4f] text-[#5a6d4f] hover:bg-[#5a6d4f]/10"
+            >
+              Entrar na Lista de Espera
+            </Button>
+          </a>
         </div>
       </div>
     </section>
