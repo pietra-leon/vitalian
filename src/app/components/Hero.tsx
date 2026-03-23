@@ -10,7 +10,7 @@ export function Hero() {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 leading-tight">
-                A primeira consulta começa antes do consultório.
+                Acolhimento digital que prepara o encontro real.
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Reduza a ansiedade de suas pacientes e otimize o seu tempo clínico com uma triagem digital humanizada e segura.
@@ -21,7 +21,7 @@ export function Hero() {
               size="lg"
               className="bg-[#5a6d4f] hover:bg-[#4a5d3f] text-white px-8 py-6 text-lg"
             >
-              Quero modernizar minha clínica
+              Otimizar meu atendimento
             </Button>
 
             {/* Trust Indicators */}
