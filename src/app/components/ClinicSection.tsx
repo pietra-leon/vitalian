@@ -1,6 +1,5 @@
-import { Check, Brain, FileCheck, Download, Calendar } from 'lucide-react';
+import { Check, Brain, FileCheck, Download, Calendar, Activity, Users, ClipboardCheck } from 'lucide-react';
 import { Button } from './ui/button';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function ClinicSection() {
   const benefits = [
@@ -75,11 +74,11 @@ export function ClinicSection() {
   ];
 
   return (
-    <section id="clinicas" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
+    <section id="clinicas" className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-4 font-calistoga">
             Para sua Clínica ou Consultório
           </h2>
           <p className="text-xl text-gray-600">
@@ -87,19 +86,19 @@ export function ClinicSection() {
           </p>
         </div>
 
-        {/* Benefits Grid with Image */}
+        {/* Benefits Grid with Illustration */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <div className="space-y-6">
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="flex gap-4 items-start p-6 bg-white rounded-xl hover:shadow-md transition-shadow"
+                className="flex gap-4 items-start p-6 bg-white/50 backdrop-blur-sm rounded-xl hover:shadow-md transition-all border border-transparent hover:border-white"
               >
-                <div className="w-12 h-12 bg-[#5a6d4f] rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-[#5a6d4f] rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
                   <benefit.icon className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg text-gray-900 mb-1">
+                  <h3 className="text-lg text-gray-900 mb-1 font-medium">
                     {benefit.title}
                   </h3>
                   <p className="text-gray-600">
@@ -110,13 +109,48 @@ export function ClinicSection() {
             ))}
           </div>
 
-          <div className="relative">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1720180244339-95e56d52e182?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjbGluaWMlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NzQxNTg1NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Clínica moderna"
-                className="w-full h-full object-cover"
-              />
+          {/* Ilustração da Clínica (Substituindo a Imagem) */}
+          <div className="relative flex items-center justify-center p-4">
+            {/* Elementos Decorativos de Fundo */}
+            <div className="absolute w-72 h-72 bg-[#5a6d4f]/10 rounded-full blur-3xl" />
+
+            <div className="relative w-full aspect-[4/3] bg-white/40 backdrop-blur-md rounded-3xl border border-white/40 shadow-2xl flex flex-col p-8 overflow-hidden">
+              {/* Header da "Interface" */}
+              <div className="flex justify-between items-center mb-8">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-red-400 rounded-full" />
+                  <div className="w-3 h-3 bg-yellow-400 rounded-full" />
+                  <div className="w-3 h-3 bg-green-400 rounded-full" />
+                </div>
+                <Activity className="w-5 h-5 text-[#5a6d4f]" />
+              </div>
+
+              {/* Grid de Dados Simulado */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/60 p-4 rounded-xl shadow-sm border border-white">
+                  <Users className="w-6 h-6 text-[#5a6d4f] mb-2" />
+                  <div className="h-2 w-12 bg-gray-200 rounded-full mb-1" />
+                  <div className="h-4 w-8 bg-gray-800 rounded-sm" />
+                </div>
+                <div className="bg-white/60 p-4 rounded-xl shadow-sm border border-white">
+                  <ClipboardCheck className="w-6 h-6 text-[#f05a61] mb-2" />
+                  <div className="h-2 w-16 bg-gray-200 rounded-full mb-1" />
+                  <div className="h-4 w-10 bg-gray-800 rounded-sm" />
+                </div>
+              </div>
+
+              {/* Gráfico Simulado */}
+              <div className="mt-6 flex-1 bg-[#5a6d4f]/5 rounded-xl border border-[#5a6d4f]/10 p-4 flex items-end gap-2">
+                <div className="w-full bg-[#5a6d4f]/20 h-[30%] rounded-t-sm" />
+                <div className="w-full bg-[#5a6d4f]/40 h-[60%] rounded-t-sm" />
+                <div className="w-full bg-[#5a6d4f] h-[45%] rounded-t-sm" />
+                <div className="w-full bg-[#5a6d4f]/30 h-[80%] rounded-t-sm" />
+              </div>
+
+              {/* Floating Elements */}
+              <div className="absolute top-1/2 -right-4 bg-[#f05a61] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg transform rotate-12">
+                IA ANALYZING
+              </div>
             </div>
           </div>
         </div>
@@ -126,25 +160,25 @@ export function ClinicSection() {
           {packages.map((pkg, index) => (
             <div
               key={index}
-              className={`rounded-2xl p-8 ${pkg.highlighted
-                ? 'bg-[#5a6d4f] text-white shadow-2xl scale-105'
-                : 'bg-white border-2 border-gray-200'
+              className={`rounded-2xl p-8 transition-all duration-300 ${pkg.highlighted
+                ? 'bg-[#5a6d4f] text-white shadow-2xl scale-105 ring-4 ring-[#5a6d4f]/20'
+                : 'bg-white/60 backdrop-blur-sm border-2 border-white shadow-sm hover:shadow-md'
                 }`}
             >
               {pkg.highlighted && (
                 <div className="text-center mb-4">
-                  <span className="inline-block px-4 py-1 bg-white/20 rounded-full text-sm">
+                  <span className="inline-block px-4 py-1 bg-white/20 rounded-full text-sm font-medium">
                     Recomendado
                   </span>
                 </div>
               )}
 
               <div className="text-center mb-8">
-                <h3 className={`text-2xl mb-4 ${pkg.highlighted ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`text-2xl mb-4 font-calistoga ${pkg.highlighted ? 'text-white' : 'text-gray-900'}`}>
                   {pkg.name}
                 </h3>
                 <div className="flex items-baseline justify-center gap-2">
-                  <span className={`text-4xl ${pkg.highlighted ? 'text-white' : 'text-gray-900'}`}>
+                  <span className={`text-4xl font-bold ${pkg.highlighted ? 'text-white' : 'text-gray-900'}`}>
                     {pkg.price}
                   </span>
                   {pkg.period && (
@@ -168,7 +202,7 @@ export function ClinicSection() {
               </ul>
 
               <Button
-                className={`w-full ${pkg.highlighted
+                className={`w-full font-bold shadow-lg ${pkg.highlighted
                   ? 'bg-white text-[#5a6d4f] hover:bg-gray-100'
                   : 'bg-[#5a6d4f] text-white hover:bg-[#4a5d3f]'
                   }`}
@@ -181,15 +215,14 @@ export function ClinicSection() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center bg-gray-50 rounded-2xl p-12">
-          <h3 className="text-2xl text-gray-900 mb-4">
+        <div className="text-center bg-white/40 backdrop-blur-md border border-white rounded-2xl p-12 shadow-xl">
+          <h3 className="text-2xl text-gray-900 mb-4 font-calistoga">
             Não tem certeza qual plano escolher?
           </h3>
           <p className="text-gray-600 mb-6">
             Entre na lista de espera e receba uma demonstração personalizada.
           </p>
 
-          {/* Link envolvendo o botão */}
           <a
             href="https://wa.me/5564981157082?text=Olá!%20Gostaria%20de%20entrar%20na%20lista%20de%20espera%20da%20Vitalian%20e%20receber%20uma%20demonstração."
             target="_blank"
@@ -198,7 +231,7 @@ export function ClinicSection() {
             <Button
               variant="outline"
               size="lg"
-              className="border-[#5a6d4f] text-[#5a6d4f] hover:bg-[#5a6d4f]/10"
+              className="border-[#5a6d4f] text-[#5a6d4f] hover:bg-[#5a6d4f]/10 font-bold px-12 rounded-full"
             >
               Entrar na Lista de Espera
             </Button>
