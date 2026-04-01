@@ -1,0 +1,30 @@
+# Dependências
+node_modules/
+
+# Build de produção
+dist/
+
+# Variáveis de ambiente — NUNCA commitar!
+.env
+.env.local
+.env.*.local
+
+# Editor
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Supabase (temporários locais, o config.toml pode ir)
+supabase/.branches
+supabase/.temp
