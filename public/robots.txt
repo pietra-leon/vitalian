@@ -1,0 +1,4 @@
+# O mockup da jornada da paciente não deve ser indexado.
+# A landing (raiz do site) continua indexável.
+User-agent: *
+Disallow: /jornada/

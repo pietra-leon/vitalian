@@ -3,9 +3,7 @@ import {
   Sparkles,
   MessageSquareText,
   HeartHandshake,
-  ClipboardCheck,
-  ShieldCheck,
-  MessageCircle
+  ClipboardCheck
 } from 'lucide-react';
 
 export function Hero() {

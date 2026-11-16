@@ -1,0 +1,151 @@
+/* Estilos do mockup da jornada da paciente (/jornada/).
+   Fontes autohospedadas: nada de CDN do Google aqui. */
+@import '@fontsource/calistoga/400.css';
+@import '@fontsource-variable/inter/index.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Reaproveita os componentes shadcn/ui trocando apenas os tokens. */
+html.jornada {
+  --font-sans: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-calistoga: 'Calistoga', Georgia, serif;
+
+  --background: var(--creme);
+  --foreground: var(--verde-profundo);
+  --card: var(--superficie);
+  --card-foreground: var(--verde-profundo);
+  --popover: var(--superficie);
+  --popover-foreground: var(--verde-profundo);
+  --primary: var(--verde);
+  --primary-foreground: var(--creme);
+  --secondary: var(--salmao);
+  --secondary-foreground: var(--verde-profundo);
+  --muted: var(--verde-claro);
+  --muted-foreground: var(--texto-2);
+  --accent: var(--verde-claro);
+  --accent-foreground: var(--verde-profundo);
+  --destructive: var(--salmao-profundo);
+  --border: var(--borda);
+  --input: var(--texto-2);
+  --input-background: var(--superficie);
+  --switch-background: #8a9064;
+  --ring: var(--verde-profundo);
+
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.jornada body {
+  background: var(--creme);
+  color: var(--verde-profundo);
+  overflow-x: hidden;
+}
+
+/* Anel de foco: 3px verde-profundo com afastamento de 2px, em tudo. */
+html.jornada :focus-visible {
+  outline: 3px solid var(--verde-profundo);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+/* Sobre fundo verde, o anel precisa ser claro para aparecer. */
+html.jornada .foco-claro:focus-visible,
+html.jornada .foco-claro :focus-visible {
+  outline-color: var(--creme);
+}
+/* Títulos recebem foco por código a cada nova tela; não precisam de anel. */
+html.jornada [data-titulo-tela]:focus,
+html.jornada [data-titulo-tela]:focus-visible {
+  outline: none;
+}
+
+html.jornada .font-titulo {
+  font-family: var(--font-calistoga);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+/* Controle deslizante de dor (input range nativo, acessível por teclado). */
+html.jornada input[type='range'].dor {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 48px;
+  background: transparent;
+  cursor: pointer;
+}
+html.jornada input[type='range'].dor::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--verde) var(--pct, 0%), var(--verde-claro) var(--pct, 0%));
+  border: 1px solid var(--texto-2);
+}
+html.jornada input[type='range'].dor::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--verde) var(--pct, 0%), var(--verde-claro) var(--pct, 0%));
+  border: 1px solid var(--texto-2);
+}
+html.jornada input[type='range'].dor::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  margin-top: -12px;
+  border-radius: 50%;
+  background: var(--superficie);
+  border: 3px solid var(--verde);
+  box-shadow: 0 2px 6px rgb(51 58 20 / 0.18);
+}
+html.jornada input[type='range'].dor::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--superficie);
+  border: 3px solid var(--verde);
+  box-shadow: 0 2px 6px rgb(51 58 20 / 0.18);
+}
+
+@keyframes jornada-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+html.jornada .girar {
+  animation: jornada-girar 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.jornada *,
+  html.jornada *::before,
+  html.jornada *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* O spinner continua indicando atividade, só que devagar. */
+  html.jornada .girar {
+    animation-duration: 2.4s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* Ícones lineares com traço de 1,75px. */
+html.jornada .lucide {
+  stroke-width: 1.75;
+}
+
+@utility sombra-suave {
+  box-shadow:
+    0 1px 2px rgb(51 58 20 / 0.04),
+    0 8px 24px rgb(51 58 20 / 0.06);
+}
+
+/* Cartões de opção são <label> com input nativo escondido: o anel vai no cartão. */
+html.jornada .opcao:has(input:focus-visible) {
+  outline: 3px solid var(--verde-profundo);
+  outline-offset: 2px;
+}
+html.jornada .opcao input:focus-visible {
+  outline: none;
+}
