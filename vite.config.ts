@@ -14,4 +14,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      // Duas páginas: a landing (/) e o mockup da jornada da paciente (/jornada/).
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        jornada: path.resolve(__dirname, 'jornada/index.html'),
+      },
+    },
+  },
 })

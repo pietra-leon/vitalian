@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Calistoga&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -42,6 +40,18 @@
   --ring: oklch(0.708 0 0);
   --radius: 0.625rem;
 
+  /* Identidade Vitalian (jornada da paciente) */
+  --creme: #F5F5DC;
+  --superficie: #FDFDF4;
+  --verde: #4B5320;
+  --verde-profundo: #333A14;
+  --verde-claro: #E4E8CF;
+  --salmao: #F8AD9D;
+  --salmao-suave: #FDE6E0;
+  --salmao-profundo: #8F3B2A;
+  --texto-2: #5C6330;
+  --borda: #D9D9BC;
+
   /* Sidebar */
   --sidebar: #FEFAE0;
   --sidebar-foreground: oklch(0.145 0 0);
@@ -79,6 +89,16 @@
 }
 
 @theme inline {
+  --color-creme: var(--creme);
+  --color-superficie: var(--superficie);
+  --color-verde: var(--verde);
+  --color-verde-profundo: var(--verde-profundo);
+  --color-verde-claro: var(--verde-claro);
+  --color-salmao: var(--salmao);
+  --color-salmao-suave: var(--salmao-suave);
+  --color-salmao-profundo: var(--salmao-profundo);
+  --color-texto-2: var(--texto-2);
+  --color-borda: var(--borda);
   --font-calistoga: var(--font-calistoga);
   --color-background: var(--background);
   --color-foreground: var(--foreground);

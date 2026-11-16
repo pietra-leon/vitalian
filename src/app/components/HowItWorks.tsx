@@ -1,4 +1,4 @@
-import { Link2, FileText, BarChart3, Smartphone, Heart, Activity } from 'lucide-react';
+import { Link2, FileText, BarChart3, Heart, Activity } from 'lucide-react';
 
 export function HowItWorks() {
   const steps = [

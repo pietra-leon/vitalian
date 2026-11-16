@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Button } from './ui/button';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
