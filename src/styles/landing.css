@@ -1,0 +1,288 @@
+/* Estilos da landing (/). Fontes autohospedadas, sem CDN. */
+@import '@fontsource-variable/fraunces/soft.css';
+@import '@fontsource-variable/figtree/index.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Para trocar as fontes do site inteiro, mude só estas duas linhas. */
+:root {
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Figtree Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --curva: cubic-bezier(0.22, 1, 0.36, 1);
+  --cabecalho: 80px;
+}
+
+html.landing {
+  --font-sans: var(--font-body);
+  --background: var(--creme);
+  --foreground: var(--verde-profundo);
+  --border: var(--borda);
+  --ring: var(--verde-profundo);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.landing body {
+  background: var(--creme);
+  color: var(--verde-profundo);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 1024px) {
+  html.landing body {
+    font-size: 18px;
+  }
+}
+
+html.landing [id] {
+  scroll-margin-top: calc(var(--cabecalho) + 16px);
+}
+
+/* Foco visível em tudo: 3px verde-profundo, afastado 2px. */
+html.landing :focus-visible {
+  outline: 3px solid var(--verde-profundo);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+html.landing .sobre-escuro :focus-visible {
+  outline-color: var(--creme);
+}
+
+/* Títulos herdam a cor do bloco (o tema base fixa uma cor nos h1-h4). */
+html.landing :is(h1, h2, h3, h4) {
+  color: inherit;
+}
+
+/* ---- Tipografia ---- */
+html.landing .display {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-weight: 560;
+  letter-spacing: -0.028em;
+  line-height: 1;
+  text-wrap: balance;
+}
+html.landing .t-hero {
+  font-size: clamp(2.75rem, 7vw, 6rem);
+  line-height: 0.96;
+}
+html.landing .t-secao {
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  line-height: 1.02;
+}
+html.landing .t-medio {
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+  line-height: 1.1;
+}
+html.landing .eyebrow {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+html.landing .numeral {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* ---- Contêiner de 1200px ---- */
+html.landing .conteiner {
+  width: 100%;
+  max-width: calc(1200px + 3rem);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 1024px) {
+  html.landing .conteiner {
+    max-width: calc(1200px + 6rem);
+    padding-inline: 3rem;
+  }
+}
+html.landing .secao {
+  padding-block: 72px;
+}
+@media (min-width: 1024px) {
+  html.landing .secao {
+    padding-block: 128px;
+  }
+}
+
+/* ---- Botões: pílula de 56px; mudam de tom e afundam 1px ---- */
+html.landing .botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 56px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--curva),
+    transform 0.2s var(--curva);
+}
+html.landing .botao:hover {
+  transform: translateY(1px);
+}
+html.landing .botao-primario {
+  background: var(--verde);
+  color: var(--creme);
+}
+html.landing .botao-primario:hover {
+  background: var(--verde-profundo);
+}
+html.landing .botao-secundario {
+  background: var(--salmao);
+  color: var(--verde-profundo);
+}
+html.landing .botao-secundario:hover {
+  background: #f59a87;
+}
+html.landing .botao-claro {
+  background: var(--creme);
+  color: var(--verde-profundo);
+}
+html.landing .botao-claro:hover {
+  background: var(--superficie);
+}
+html.landing .elo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  transition: text-underline-offset 0.2s var(--curva);
+}
+html.landing .elo:hover {
+  text-underline-offset: 3px;
+}
+html.landing .elo-nav {
+  text-decoration: none;
+}
+html.landing .elo-nav:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+/* ---- Pílulas de seleção (abas) ---- */
+html.landing .pilula {
+  min-height: 48px;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--verde);
+  color: var(--verde-profundo);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--curva),
+    color 0.2s var(--curva);
+}
+html.landing .pilula:hover {
+  background: rgb(75 83 32 / 0.1);
+}
+html.landing .pilula[data-state='active'],
+html.landing .pilula[aria-pressed='true'] {
+  background: var(--verde);
+  color: var(--creme);
+}
+
+/* ---- Revelação ao rolar: fade + 12px, 450ms, uma vez ---- */
+html.landing .revelar {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s var(--curva),
+    transform 0.45s var(--curva);
+  transition-delay: var(--atraso, 0ms);
+}
+html.landing .revelar[data-visivel] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Troca suave dos painéis das abas. */
+@keyframes landing-surgir {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+html.landing .painel[data-state='active'] {
+  animation: landing-surgir 0.35s var(--curva);
+}
+
+/* Acordeão: abertura suave. */
+@keyframes landing-abrir {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes landing-fechar {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+html.landing .faq-conteudo {
+  overflow: hidden;
+}
+html.landing .faq-conteudo[data-state='open'] {
+  animation: landing-abrir 0.3s var(--curva);
+}
+html.landing .faq-conteudo[data-state='closed'] {
+  animation: landing-fechar 0.25s var(--curva);
+}
+html.landing .faq-sinal {
+  transition: transform 0.3s var(--curva);
+}
+html.landing [data-state='open'] > .faq-sinal {
+  transform: rotate(45deg);
+}
+
+/* Sombra de contato dos dispositivos (uma só, sob o objeto). */
+html.landing .contato {
+  filter: drop-shadow(0 22px 18px rgb(51 58 20 / 0.16));
+}
+
+/* Movimento reduzido: sem deslocamentos nem molas, só opacidade. */
+@media (prefers-reduced-motion: reduce) {
+  html.landing {
+    scroll-behavior: auto;
+  }
+  html.landing .revelar {
+    transform: none;
+  }
+  html.landing .botao:hover {
+    transform: none;
+  }
+  html.landing .painel[data-state='active'] {
+    animation: none;
+  }
+  html.landing .faq-conteudo[data-state='open'],
+  html.landing .faq-conteudo[data-state='closed'] {
+    animation: none;
+  }
+  html.landing .faq-sinal {
+    transition: none;
+  }
+}
