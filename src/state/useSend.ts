@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useClinic } from './ClinicContext';
 import { firstPendingPath, useJourney } from './JourneyContext';
 
 const ESPERA_MS = 1800;
@@ -10,6 +11,7 @@ const ESPERA_MS = 1800;
  */
 export function useSend() {
   const j = useJourney();
+  const { receiveFromPatient } = useClinic();
   const navigate = useNavigate();
   const [sending, setSending] = useState(false);
   const timer = useRef<number | undefined>(undefined);
@@ -28,11 +30,13 @@ export function useSend() {
           navigate('/triagem/erro');
         } else {
           j.markSubmitted(); // também desliga o erro simulado
+          // Integração: a triagem aparece no topo da lista do médico, nesta mesma sessão.
+          receiveFromPatient(j.answers);
           navigate('/triagem/demo/concluido');
         }
       }, ESPERA_MS);
     },
-    [j, navigate, sending],
+    [j, navigate, sending, receiveFromPatient],
   );
 
   return { sending, send };

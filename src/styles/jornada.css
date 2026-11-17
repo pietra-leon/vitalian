@@ -4,6 +4,7 @@
 @import '@fontsource-variable/inter/index.css';
 @import './tailwind.css';
 @import './theme.css';
+@import './painel.css';
 
 /* Reaproveita os componentes shadcn/ui trocando apenas os tokens. */
 html.jornada {

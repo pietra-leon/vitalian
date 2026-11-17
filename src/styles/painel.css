@@ -1,0 +1,133 @@
+/* Área do médico: mais densa que a jornada da paciente. */
+html.jornada {
+  --clinico-urgente: #b3261e;
+  --clinico-atencao: #f2c94c;
+}
+
+/* "Ocultar nomes": desfoca nomes de pacientes ao compartilhar a tela. */
+html.jornada .nome-oculto {
+  filter: blur(6px);
+  user-select: none;
+}
+
+/* Destaque suave de uma triagem recém-chegada. */
+@keyframes painel-pulso {
+  0%,
+  100% {
+    background-color: var(--superficie);
+  }
+  50% {
+    background-color: var(--salmao-suave);
+  }
+}
+html.jornada .pulso {
+  animation: painel-pulso 1.6s ease-in-out 4;
+  box-shadow: inset 0 0 0 2px var(--clinico-urgente);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.jornada .pulso {
+    animation: none;
+    background-color: var(--salmao-suave);
+  }
+}
+
+@keyframes painel-skeleton {
+  50% {
+    opacity: 0.45;
+  }
+}
+html.jornada .esqueleto {
+  border-radius: 8px;
+  background: var(--verde-claro);
+  animation: painel-skeleton 1.2s ease-in-out infinite;
+}
+
+/* ---------------- Relatório: folha A4 ---------------- */
+html.jornada .folha {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 794px;
+  margin-inline: auto;
+  background: #fff;
+  color: #1c1f0e;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+html.jornada .folha h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1c1f0e;
+  border-bottom: 1.5px solid #1c1f0e;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+}
+html.jornada .folha section {
+  break-inside: avoid;
+}
+/* Marca d'água diagonal, repetida por toda a folha. */
+html.jornada .marca-dagua {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  overflow: hidden;
+}
+html.jornada .marca-dagua span {
+  transform: rotate(-28deg);
+  white-space: nowrap;
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: 0.06em;
+  color: rgb(28 31 14 / 0.07);
+}
+/* Alertas legíveis em preto e branco: o estilo da borda carrega o nível. */
+html.jornada .alerta-urgente {
+  border: 5px double #1c1f0e;
+}
+html.jornada .alerta-atencao {
+  border: 2px dashed #1c1f0e;
+}
+html.jornada .alerta-rotina {
+  border: 1px solid #1c1f0e;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  html.jornada,
+  html.jornada body {
+    background: #fff !important;
+  }
+  html.jornada .nao-imprimir {
+    display: none !important;
+  }
+  html.jornada .area-painel {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+  html.jornada .folha {
+    max-width: none;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    overflow: visible;
+  }
+  html.jornada .marca-dagua {
+    position: fixed;
+  }
+  html.jornada * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

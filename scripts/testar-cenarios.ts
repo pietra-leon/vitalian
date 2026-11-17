@@ -5,6 +5,10 @@ import type { Answers } from '../src/mock/conditions';
 import { evaluate } from '../src/mock/flags';
 import { isValidCpf, modules, questionProblems, visibleQuestions } from '../src/mock/questionnaire';
 import { scenarios } from '../src/mock/scenarios';
+import { buildAccessLog, buildInvites, buildTriages, categoriaOf } from '../src/mock/clinic';
+import { dayDiff } from '../src/lib/dates';
+import { buildSummary } from '../src/lib/summary';
+import { isValidCpf as cpfOk } from '../src/mock/questionnaire';
 
 let falhas = 0;
 const confere = (ok: boolean, nome: string) => {
@@ -57,6 +61,38 @@ confere(
 );
 confere(isValidCpf('529.982.247-25'), 'CPF de teste é válido');
 confere(!isValidCpf('529.982.247-26') && !isValidCpf('111.111.111-11'), 'CPFs inválidos são recusados');
+
+// ---- Área do médico: os dados fictícios batem com o combinado? ----
+const agora = new Date();
+const tri = buildTriages(agora);
+const conta = <T,>(xs: T[], f: (x: T) => string) =>
+  xs.reduce<Record<string, number>>((m, x) => ((m[f(x)] = (m[f(x)] ?? 0) + 1), m), {});
+const niveis = conta(tri, (t) => evaluate(t.answers).nivel);
+confere(tri.length === 12 && niveis.urgente === 3 && niveis.atencao === 3 && niveis.rotina === 6, `12 triagens: ${JSON.stringify(niveis)}`);
+const st = conta(tri, (t) => t.status);
+confere(st.pendente === 7 && st.em_analise === 2 && st.concluido === 3, `status: ${JSON.stringify(st)}`);
+const dias = conta(tri, (t) => {
+  const d = dayDiff(t.consulta, agora);
+  return d < 0 ? 'realizadas' : d === 0 ? 'hoje' : d === 1 ? 'amanha' : 'semana';
+});
+confere(dias.hoje === 3 && dias.amanha === 4 && dias.semana === 3 && dias.realizadas === 2, `consultas: ${JSON.stringify(dias)}`);
+const hoje = tri.filter((t) => dayDiff(t.consulta, agora) === 0).map((t) => evaluate(t.answers).nivel).sort().join(',');
+confere(hoje === 'atencao,rotina,urgente', `hoje: 1 urgente, 1 atenção, 1 rotina (${hoje})`);
+confere(tri.every((t) => cpfOk(t.paciente.cpf)), 'CPFs fictícios das triagens são válidos');
+confere(tri.every((t) => modules.every((m) => visibleQuestions(m, t.answers).every((q) => Object.keys(questionProblems(q, t.answers)).length === 0))), 'respostas das 12 triagens estão completas');
+const cats = conta(tri, (t) => categoriaOf(t.answers, evaluate(t.answers)));
+confere(cats.rotina > 0 && cats.emergencia > 0 && cats.gestacao > 0, `categorias: ${JSON.stringify(cats)}`);
+// O nível vem de evaluate(): mudar uma resposta muda o nível.
+const ana = tri[0];
+confere(
+  evaluate(ana.answers).nivel === 'urgente' && evaluate({ ...ana.answers, dor_intensidade: 4, dor_inicio: 'dias' }).nivel === 'rotina',
+  'alterar uma resposta de cenário altera o nível',
+);
+const resumo = buildSummary(ana.answers, 25);
+confere(resumo.length >= 5 && resumo.length <= 8, `resumo com ${resumo.length} linhas`);
+const conv = buildInvites(agora, tri);
+confere(conv.length === 16 && Object.keys(conta(conv, (c) => c.status)).length === 5, '16 convites com os 5 status');
+confere(buildAccessLog(agora, tri).length === 20, '20 linhas no registro de acessos');
 
 console.log(falhas === 0 ? '\nTudo certo.' : `\n${falhas} verificação(ões) falharam.`);
 process.exit(falhas === 0 ? 0 : 1);
