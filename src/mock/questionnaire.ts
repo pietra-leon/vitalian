@@ -601,8 +601,25 @@ export function findQuestion(id: string): { module: Module; question: Question }
   return undefined;
 }
 
+export function findField(id: string): { question: Question; field: Field } | undefined {
+  for (const m of modules) {
+    for (const question of m.questions) {
+      const field = question.fields.find((f) => f.id === id);
+      if (field) return { question, field };
+    }
+  }
+  return undefined;
+}
+
+/** Rótulo de uma opção (ex.: 'dor_baixa' -> 'Dor na parte baixa da barriga'). */
+export function optionLabel(fieldId: string, value: string): string {
+  const f = findField(fieldId)?.field;
+  return [...(f?.options ?? []), ...(f?.alternatives ?? [])].find((o) => o.value === value)?.label ?? value;
+}
+
 export function effectiveValue(f: Field, a: Answers): Value | undefined {
-  return f.type === 'readonly' ? f.readonlyValue : a[f.id];
+  // Somente leitura: usa o dado do cadastro (painel) ou o do convite (jornada da paciente).
+  return f.type === 'readonly' ? (a[f.id] ?? f.readonlyValue) : a[f.id];
 }
 
 /** Texto da resposta para a tela de revisão. */

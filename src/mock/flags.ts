@@ -16,6 +16,11 @@ export interface Rule {
   /** `topico`: não muda o nível; vira "tópico a abordar" para a médica. */
   nivel: 'urgente' | 'atencao' | 'topico';
   rotulo: string;
+  /**
+   * Nível numérico (`urgency_level` do produto): 4 e 5 = urgente, 3 = atenção.
+   * A gradação entre 4 e 5 é um palpite de exemplo, para o médico criticar.
+   */
+  urgencia?: 3 | 4 | 5;
   /** Aciona o bloco de apoio ("Você não está sozinha"). */
   apoio?: boolean;
   when: Condition;
@@ -41,6 +46,7 @@ export const rules: Rule[] = [
   {
     id: 'dor_intensa',
     nivel: 'urgente',
+    urgencia: 5,
     rotulo: 'Dor na parte baixa da barriga intensa (8 ou mais) ou de início súbito',
     when: {
       all: [
@@ -52,12 +58,14 @@ export const rules: Rule[] = [
   {
     id: 'sangramento_intenso',
     nivel: 'urgente',
+    urgencia: 5,
     rotulo: 'Sangramento fora do período com volume intenso',
     when: { all: [sintoma('sangramento'), { field: 'sangramento_volume', equals: 'muito' }] },
   },
   {
     id: 'febre_com_sintoma',
     nivel: 'urgente',
+    urgencia: 4,
     rotulo: 'Febre de 38 ou mais junto com dor, corrimento ou sangramento',
     when: {
       all: [
@@ -70,12 +78,14 @@ export const rules: Rule[] = [
   {
     id: 'gestacao_com_sintoma',
     nivel: 'urgente',
+    urgencia: 5,
     rotulo: 'Possível gestação junto com dor ou sangramento',
     when: { all: [possivelGestacao, { field: 'sintomas', includesAny: ['dor_baixa', 'sangramento'] }] },
   },
   {
     id: 'autolesao',
     nivel: 'urgente',
+    urgencia: 5,
     rotulo: 'Pensamentos de se machucar',
     apoio: true,
     when: { field: 'autolesao', equals: 'sim' },
@@ -83,27 +93,31 @@ export const rules: Rule[] = [
   {
     id: 'violencia_atual',
     nivel: 'urgente',
+    urgencia: 4,
     rotulo: 'Situação de violência atual',
     apoio: true,
     when: { field: 'violencia', equals: 'atualmente' },
   },
   // ---- Atenção ----
-  { id: 'nodulo_mama', nivel: 'atencao', rotulo: 'Nódulo na mama', when: sintoma('nodulo') },
+  { id: 'nodulo_mama', nivel: 'atencao', urgencia: 3, rotulo: 'Nódulo na mama', when: sintoma('nodulo') },
   {
     id: 'suspeita_ist',
     nivel: 'atencao',
+    urgencia: 3,
     rotulo: 'Possível exposição a IST',
     when: { field: 'ist', equals: 'sim' },
   },
   {
     id: 'lesoes_genitais',
     nivel: 'atencao',
+    urgencia: 3,
     rotulo: 'Feridas ou lesões na região íntima',
     when: sintoma('feridas'),
   },
   {
     id: 'atraso_sem_metodo',
     nivel: 'atencao',
+    urgencia: 3,
     rotulo: 'Menstruação atrasada há mais de 45 dias, sem método contraceptivo contínuo',
     when: {
       all: [
@@ -124,6 +138,8 @@ export const rules: Rule[] = [
 
 export interface Evaluation {
   nivel: Nivel;
+  /** Nível numérico de 1 a 5 (rotina: 1 sem sintomas, 2 com algum sintoma). */
+  urgencia: 1 | 2 | 3 | 4 | 5;
   /** Regras de nível urgente ou atenção que foram acionadas. */
   regras: Rule[];
   /** Tópicos a abordar na consulta (não mudam o nível). */
@@ -149,7 +165,15 @@ export function evaluate(answers: Answers): Evaluation {
     }),
   ];
 
+  const sintomas = answers.sintomas;
+  const temSintoma = Array.isArray(sintomas) && sintomas.some((x) => x !== 'nenhum');
+  const urgencia = regras.reduce<1 | 2 | 3 | 4 | 5>(
+    (max, r) => (r.urgencia && r.urgencia > max ? r.urgencia : max),
+    temSintoma ? 2 : 1,
+  );
+
   return {
+    urgencia,
     nivel: urgentes.length > 0 ? 'urgente' : regras.length > 0 ? 'atencao' : 'rotina',
     regras,
     topicos,

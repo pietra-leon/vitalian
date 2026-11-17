@@ -1,8 +1,10 @@
 // Mockup da jornada da paciente. Servido em /jornada/ (a landing continua em /).
 // HashRouter: o GitHub Pages não faz fallback de rotas.
-import { lazy, type ReactNode } from 'react';
+import { Suspense, lazy, type ReactNode } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router';
+import { Allow, PanelShell } from '@/components/painel/shell/PanelShell';
 import { AppShell } from '@/components/shell/AppShell';
+import { ClinicProvider } from '@/state/ClinicContext';
 import { JourneyProvider, firstPendingPath, useJourney } from '@/state/JourneyContext';
 
 // Code-splitting por rota.
@@ -19,6 +21,20 @@ const Minor = lazy(() => import('@/pages/Minor'));
 const SendError = lazy(() => import('@/pages/SendError'));
 const SessionExpired = lazy(() => import('@/pages/SessionExpired'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
+
+// Área do médico (/painel)
+const Login = lazy(() => import('@/pages/painel/Login'));
+const Triagens = lazy(() => import('@/pages/painel/Triagens'));
+const TriagemDetalhe = lazy(() => import('@/pages/painel/TriagemDetalhe'));
+const Relatorio = lazy(() => import('@/pages/painel/Relatorio'));
+const Convites = lazy(() => import('@/pages/painel/Convites'));
+const NovoConvite = lazy(() => import('@/pages/painel/NovoConvite'));
+const Questionario = lazy(() => import('@/pages/painel/Questionario'));
+const Acessos = lazy(() => import('@/pages/painel/Acessos'));
+const estados = () => import('@/pages/painel/Estados');
+const SemPermissao = lazy(() => estados().then((m) => ({ default: m.SemPermissao })));
+const NaoEncontrado = lazy(() => estados().then((m) => ({ default: m.NaoEncontrado })));
+const SessaoExpirada = lazy(() => estados().then((m) => ({ default: m.SessaoExpirada })));
 
 /**
  * Guardas em memória: sem consentimento não se acessa a verificação; sem
@@ -39,9 +55,27 @@ function Guard({ need, children }: { need: 'consent' | 'verified' | 'submitted';
 
 export default function App() {
   return (
+    <ClinicProvider>
     <JourneyProvider>
       <HashRouter>
+        <Suspense fallback={null}>
         <Routes>
+          {/* Área do médico. Login e sessão expirada ficam fora do shell. */}
+          <Route path="/painel/login" element={<Login />} />
+          <Route path="/painel/sessao-expirada" element={<SessaoExpirada />} />
+          <Route element={<PanelShell />}>
+            <Route path="/painel" element={<Allow area="triagens"><Triagens /></Allow>} />
+            <Route path="/painel/triagem/:id" element={<Allow area="triagens"><TriagemDetalhe /></Allow>} />
+            <Route path="/painel/triagem/:id/relatorio" element={<Allow area="triagens"><Relatorio /></Allow>} />
+            <Route path="/painel/convites" element={<Allow area="convites"><Convites /></Allow>} />
+            <Route path="/painel/convites/novo" element={<Allow area="convites"><NovoConvite /></Allow>} />
+            <Route path="/painel/questionario" element={<Allow area="questionario"><Questionario /></Allow>} />
+            <Route path="/painel/acessos" element={<Allow area="acessos"><Acessos /></Allow>} />
+            <Route path="/painel/sem-permissao" element={<SemPermissao />} />
+            <Route path="/painel/nao-encontrado" element={<NaoEncontrado />} />
+            <Route path="/painel/*" element={<NaoEncontrado />} />
+          </Route>
+
           <Route element={<AppShell />}>
             <Route path="/" element={<Demo />} />
             <Route path="/triagem/demo" element={<Welcome />} />
@@ -58,7 +92,9 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        </Suspense>
       </HashRouter>
     </JourneyProvider>
+    </ClinicProvider>
   );
 }
