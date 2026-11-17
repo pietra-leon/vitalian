@@ -1,11 +1,72 @@
-# vitalian-landing
+# Vitalian: site e demonstração
 
-Este repositório publica duas páginas no GitHub Pages:
+Este repositório publica duas páginas (GitHub Pages e Vercel, domínio `vitalian.com.br`):
 
 | Endereço | O que é | Entrada |
 |---|---|---|
-| `/` | Landing do Vitalian | `index.html` → `src/main.tsx` |
-| `/jornada/` | **Mockup navegável da jornada da paciente** (não indexado) | `jornada/index.html` → `src/jornada.tsx` |
+| `/` | Landing do Vitalian | `index.html` → `src/main.tsx` → `src/landing/` |
+| `/jornada/` | Mockups navegáveis da paciente e da área do médico (não indexados) | `jornada/index.html` → `src/jornada.tsx` |
+
+```bash
+npm install
+npm run dev            # landing em http://localhost:5173/ e mockups em /jornada/
+npm run build          # confere os tipos (tsc) e gera dist/
+npm run test:cenarios  # regras de triagem e cenários dos mockups
+```
+
+`node_modules/` e `dist/` não são versionados.
+
+## Landing
+
+Sem backend, sem cookies, sem analytics e sem `localStorage`. O formulário
+final só monta uma mensagem e abre o WhatsApp.
+
+```
+src/landing/
+  content/copy.ts      TODO o texto da página (edite aqui, sem mexer em layout)
+  content/capturas.ts  lista das capturas dos mockups e seus textos alternativos
+  sections/            uma seção por arquivo, na ordem da página
+  components/          Button, DeviceFrame (celular, notebook, folha), Reveal, Eyebrow, SectionTitle
+  illustrations/       StarMark, Botanical, Shapes, SilenceTimeline (SVG próprio)
+  pages/               Home, Privacy, Terms (#/privacidade e #/termos)
+src/styles/landing.css tokens de fonte, tipografia, botões e movimento
+public/img/            capturas em WebP (1x e 2x)
+```
+
+- **Fontes:** Fraunces (títulos) e Figtree (texto), autohospedadas. Para trocar,
+  mude `--font-display` e `--font-body` no topo de `src/styles/landing.css`.
+- **Pendências marcadas no código:** procure por `[CONFIRMAR]` em
+  `src/landing/content/copy.ts` (endereço da demonstração, LGPD, FAQ de segurança)
+  e por `[CNPJ` no rodapé.
+- **"Quem está por trás":** a seção só é publicada quando `sobre.pessoas`, em
+  `copy.ts`, tiver conteúdo. Vazia, ela aparece apenas em desenvolvimento.
+- **Capturas:** para refazer depois de mudar os mockups, rode
+  `npm run build && npm run preview` e, em outro terminal,
+  `python3 scripts/capturar-telas.py http://localhost:4173` (precisa de
+  Python com playwright e Pillow).
+- **Declarações proibidas:** a lista está no comentário de
+  `src/landing/sections/Trust.tsx`. Não acrescente nenhuma sem comprovação.
+
+### Contraste da landing (WCAG AA)
+
+| Texto | Fundo | Razão |
+|---|---|---|
+| `--verde-profundo` | `--creme` | 10,8:1 |
+| `--verde-profundo` | `--superficie` | 11,7:1 |
+| `--verde-profundo` | `--verde-claro` | 9,5:1 |
+| `--verde-profundo` | `--salmao` | 6,5:1 |
+| `--verde` | `--creme` | 7,4:1 |
+| `--verde` | `--superficie` | 8,0:1 |
+| `--verde` | `--verde-claro` | 6,6:1 |
+| `--creme` | `--verde` | 7,4:1 |
+| `--creme` | `--verde-profundo` | 10,8:1 |
+| `--texto-2` | `--creme` | 5,8:1 |
+| `--texto-2` | `--superficie` | 6,3:1 |
+| `--salmao-profundo` | `--salmao-suave` | 6,2:1 |
+
+`--salmao` nunca é cor de texto. Ele aparece como fundo e, nos numerais 1, 2 e 3
+de "Como funciona", como enfeite grande: o número também está no título de cada
+passo, para leitores de tela.
 
 ## Mockup da jornada da paciente
 
